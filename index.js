@@ -6,6 +6,6 @@ const server = http.createServer((req, res) => {
   res.end('Hello World\n');
 });
 
-server.listen(80, () => {
+server.listen(80, '35.163.38.57', () => {
   console.log('Server listening at port 80 at 35.163.38.57');
 });

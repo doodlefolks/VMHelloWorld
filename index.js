@@ -1,9 +1,8 @@
-let http = require ('http');
+let express = require('express');
+let app = express();
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World\n');
+app.get('/', (req, res) => {
+  res.send('Hello World');
 });
 
-server.listen(80);
+app.listen(80);

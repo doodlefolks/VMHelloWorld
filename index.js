@@ -1,4 +1,4 @@
-require ('http');
+let http = require ('http');
 
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
@@ -6,6 +6,6 @@ const server = http.createServer((req, res) => {
   res.end('Hello World\n');
 });
 
-server.listen(20, () => {
-  console.log('Server listening at port 20 at 35.163.38.57');
+server.listen(80, () => {
+  console.log('Server listening at port 80 at 35.163.38.57');
 });

@@ -7,8 +7,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/files', (req, res) => {
-  let root = fs.readdir('/');
-  res.send(root);
+  let root = fs.readdir('/', (err, files) => {
+    res.send(root);
+  });
 })
 
 app.listen(80);

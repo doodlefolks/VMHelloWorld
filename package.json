@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/doodlefolks/VMHelloWorld",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "fs-promise": "^1.0.0",
+    "fs-readdir-promise": "^1.0.1"
   }
 }

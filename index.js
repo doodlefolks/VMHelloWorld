@@ -14,8 +14,9 @@ app.get('/files', (req, res) => {
 })
 
 app.get('/os', (req, res) => {
-  let cpus = os.cpus();
-  res.send(cpus);
+  let cpuInfo = fs.readFile('/proc/cpuinfo', (err, data) => {
+    res.send(cpuInfo);
+  });
 });
 
 app.listen(80);

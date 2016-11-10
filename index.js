@@ -9,12 +9,27 @@ app.use(express.static('public'));
 
 app.get('/*', (req, res) => {
   let dir = req.url;
-  dir = dir.split('+').join(' ');
   let data = {data: []};
+  if (dir !== '/') {
+    let upPath = dir.split('/');
+    console.log(upPath);
+    upPath.pop();
+    upPath = upPath.join('/');
+    data.data = [{
+      name: 'up directory',
+      type: 'up',
+      url: upPath || '/',
+    }];
+    console.log(data);
+  }
+  dir = dir.split('+').join(' ');
   let promises = [];
   readdir(dir)
     .then((files) => {
       // This is a directory
+      if (files.length === 0) {
+        res.render('index', { empty: true })
+      }
       for (let file of files) {
         let newPromise = readdir(`${dir}/${file}`)
           .then((files) => {

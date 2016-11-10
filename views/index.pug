@@ -1,13 +1,17 @@
 html
   head
     script(src='https://use.fontawesome.com/d87d71a8c7.js')
-    link(rel='stylesheet' type='text/css' href="/index.css")
+    link(rel='stylesheet' type='text/css' href='/index.css')
   body
+    if empty
+
     each datum in data
       p
         - if (datum.type === 'dir') {
           i(class='fa fa-level-down' aria-hidden='true')
-        - } else {
+        - } else if (datum.type === 'file') {
           i(class='fa fa-file' aria-hidden='true')
+        - } else if (datum.type === 'up') {
+          i(class='fa fa-level-up' aria-hidden='true')
         - }
         a(href=datum.url)=datum.name

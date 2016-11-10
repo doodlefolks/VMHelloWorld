@@ -4,40 +4,48 @@ let readdir = require('fs-readdir-promise');
 let app = express();
 let os = require('os');
 
+app.set('view engine', 'pug');
+app.use(express.static('public'));
+
 app.get('/*', (req, res) => {
   let dir = req.url;
-  dir = dir.replace(/\+*/, ' ');
-  console.log(dir);
-  let data = [];
+  dir = dir.split('+').join(' ');
+  let data = {data: []};
   let promises = [];
   readdir(dir)
     .then((files) => {
+      // This is a directory
       for (let file of files) {
         let newPromise = readdir(`${dir}/${file}`)
           .then((files) => {
-            data.push({
+            data.data.push({
               name: file,
               type: 'dir',
-              path: `${dir}${file}`,
+              url: `${dir === '/' ? '' : dir}/${file}`.split(' ').join('+'),
             })
           })
           .catch((err) => {
-            data.push({
+            data.data.push({
               name: file,
               type: 'file',
-              path: `${dir}/${file}`,
+              url: `${dir === '/' ? '' : dir}/${file}`.split(' ').join('+'),
             })
           })
         ;
         promises.push(newPromise);
       }
       Promise.all(promises).then(() => {
-        res.send(data);
+        res.render('index', data);
       });
     })
     .catch((err) => {
-      console.log(err);
-      res.end();
+      // This is a file
+      fs.readFile(dir, (err, data) => {
+        if (err) {
+          res.send('This file is protected and cannot be downloaded.')
+        }
+        res.send(data);
+      })
     })
   ;
 });

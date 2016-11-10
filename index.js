@@ -14,8 +14,8 @@ app.get('/files', (req, res) => {
 })
 
 app.get('/os', (req, res) => {
-  let cpuInfo = fs.readFile('/proc/cpuinfo', (err, data) => {
-    res.send(cpuInfo);
+  fs.readFile('/proc/cpuinfo', (err, data) => {
+    res.send(data);
   });
 });
 
